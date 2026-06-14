@@ -1193,9 +1193,9 @@ function updateVisibility() {
       instanceId: "custom-sea-bonus-widget",
       position: "before",
       attributes: {
-        "ship-src": "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/xxx.png",
-        "back-wave-src": "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/waveeeee-Photoroom%201.png",
-        "front-wave-src": "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/waveeeee-Photoroom%201.png",
+        "ship-src": "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/xxx_11zon.webp",
+        "back-wave-src": "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/waveee_11zon.webp",
+        "front-wave-src": "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/waveee_11zon.webp",
         "promo-link": "/en/promotions/welcome-bonus"
       }
     }
