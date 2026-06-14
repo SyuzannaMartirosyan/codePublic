@@ -70,6 +70,8 @@
 body {
     background: var(--bg-1) !important;
 }
+ [data-mj="widget-top-providers"] {
+overflow:hidden!important; }
 [data-mj="root-layout"]{
         background: var(--bg-1) !important;
 }
