@@ -15,7 +15,7 @@ class SlotCollections extends HTMLElement {
         title: "Dragons Collection",
         subtitle: "Mystic reels, icy beasts and legendary wins.",
         url: "/en/casino/all?search=dragon",
-        hero: "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/Frame%203.webp",
+        hero: "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/dragon_11zon.webp",
         glow: "#00aaff",
         games: [
           "https://nordabet.ee/api/cmsgateway/api/v1/AssetsSite/gameimage/178328.webp?folder=VerticalGameImages&width=427&height=576&Quality=90&format=webp",
@@ -31,7 +31,7 @@ class SlotCollections extends HTMLElement {
         title: "Olympus Collection",
         subtitle: "Gods, lightning and powerful bonus features.",
         url: "/en/casino/all?search=olympus ",
-        hero: "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/Frame%204.webp",
+        hero: "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/olymp_11zon.webp",
         glow: "#ffb52e",
         games: [
           "https://nordabet.ee/api/cmsgateway/api/v1/AssetsSite/gameimage/36071.webp?folder=VerticalGameImages&width=427&height=576&Quality=90&format=webp",
@@ -46,7 +46,7 @@ class SlotCollections extends HTMLElement {
         title: "Egypt Collection",
         subtitle: "Ancient treasures, pharaohs and golden spins.",
         url: "/en/casino/all?search=egypt",
-        hero: "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/Frame%202%20(1).webp",
+        hero: "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/egypt_11zon.webp",
         glow: "#d99027",
         games: [
           "https://nordabet.ee/api/cmsgateway/api/v1/AssetsSite/gameimage/60420.webp?folder=VerticalGameImages&width=427&height=576&Quality=90&format=webp",
@@ -818,7 +818,7 @@ customElements.define("sea-bonus-widget", SeaBonusWidget);
   if (document.getElementById("sports-tv-widget")) return;
 
   const BREAKPOINT = 1000;
-  const FRONT_IMAGE_URL = "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/bl.png";
+  const FRONT_IMAGE_URL = "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/tv_11zon.jpg";
 
   let currentMode = null;
   let resizeTimer = null;
