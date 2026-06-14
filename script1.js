@@ -1215,7 +1215,9 @@ customElements.define("sea-bonus-widget", SeaBonusWidget);
       [data-mj="widget-top-providers"] button[aria-label="arrow_right"] {
         display: none !important;
       }
-
+ [data-mj="widget-top-providers"] {
+        overflow: hidden !important;
+      }
       ${SLIDER_SELECTOR} {
         overflow: hidden !important;
         display: flex !important;
