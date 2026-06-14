@@ -812,12 +812,14 @@ class SeaBonusWidget extends HTMLElement {
 }
 
 customElements.define("sea-bonus-widget", SeaBonusWidget); 
-(function () {
+        (function () {
   console.log("[SPORTS-TV] Starting injector");
 
   if (document.getElementById("sports-tv-widget")) return;
 
   const BREAKPOINT = 1000;
+  const FRONT_IMAGE_URL = "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/bl.png";
+
   let currentMode = null;
   let resizeTimer = null;
 
@@ -873,106 +875,17 @@ customElements.define("sea-bonus-widget", SeaBonusWidget);
   backface-visibility: hidden;
   overflow: hidden;
   background: rgba(7,17,31,.35);
-  border: 1px solid rgba(255,255,255,.1);
+  
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  box-shadow:
-    0 20px 50px rgba(0,0,0,.5),
-    inset 0 0 24px rgba(0,189,255,.18);
+  
 }
 
-.sports-tv__front { padding: 8px; }
-
-.sports-tv__screen {
-  position: relative;
+.sports-tv__front-img {
   width: 100%;
   height: 100%;
-  border-radius: 17px;
-  overflow: hidden;
-  box-shadow:
-    inset 0 0 34px rgba(0,187,255,.18),
-    0 0 22px rgba(89,205,248,.24);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.sports-tv__screen::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    180deg,
-    rgba(255,255,255,.025) 0px,
-    rgba(255,255,255,.025) 1px,
-    transparent 2px,
-    transparent 4px
-  );
-  pointer-events: none;
-  z-index: 2;
-}
-
-.sports-tv__glass {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 3;
-  background: linear-gradient(
-    120deg,
-    rgba(255,255,255,.22) 0%,
-    rgba(255,255,255,.06) 24%,
-    transparent 42%
-  );
-}
-
-.sports-tv__live {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  z-index: 4;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 8px;
-  border-radius: 999px;
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: .8px;
-  color: #fff;
-  background: rgba(255,0,0,.22);
-  border: 1px solid rgba(255,80,80,.45);
-}
-
-.sports-tv__live span {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #ff3d3d;
-  box-shadow: 0 0 8px #ff3d3d, 0 0 14px #ff3d3d;
-  animation: livePulse 1.2s infinite;
-}
-
-.sports-tv__content {
-  position: relative;
-  z-index: 4;
-  text-align: center;
-  padding: 18px;
-}
-
-.sports-tv__label {
   display: block;
-  margin: 8px 0 4px;
-  color: rgb(0,189,255);
-  font-size: 18px;
-  letter-spacing: 2px;
-  font-weight: 900;
-}
-
-.sports-tv__content p {
-  margin: 0;
-  color: #fff;
-  font-size: 13px;
+  object-fit: contain;
 }
 
 .sports-tv__back {
@@ -1021,11 +934,6 @@ customElements.define("sea-bonus-widget", SeaBonusWidget);
   0%, 100% { transform: translateY(0) rotate(-1deg); }
   50% { transform: translateY(-12px) rotate(2deg); }
 }
-
-@keyframes livePulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.25); opacity: .7; }
-}
 `;
 
   document.head.appendChild(style);
@@ -1037,14 +945,7 @@ customElements.define("sea-bonus-widget", SeaBonusWidget);
     <div class="sports-tv">
       <div class="sports-tv__inner">
         <div class="sports-tv__front">
-          <div class="sports-tv__screen">
-            <div class="sports-tv__glass"></div>
-            <div class="sports-tv__live"><span></span>LIVE</div>
-            <div class="sports-tv__content">
-              <span class="sports-tv__label">SPORTS CHANNEL</span>
-              <p>Hover or tap to watch live action</p>
-            </div>
-          </div>
+          <img class="sports-tv__front-img" src="${FRONT_IMAGE_URL}" alt="Sports TV" />
         </div>
 
         <div class="sports-tv__back">
@@ -1107,19 +1008,15 @@ customElements.define("sea-bonus-widget", SeaBonusWidget);
     preloadVideo();
   }
 
-  function handleMouseEnter() {
-    if (currentMode === "hover") {
-      startVideo();
-    }
-  }
+  sportsTv.addEventListener("mouseenter", function () {
+    if (currentMode === "hover") startVideo();
+  });
 
-  function handleMouseLeave() {
-    if (currentMode === "hover") {
-      stopVideo();
-    }
-  }
+  sportsTv.addEventListener("mouseleave", function () {
+    if (currentMode === "hover") stopVideo();
+  });
 
-  function handleClick(event) {
+  sportsTv.addEventListener("click", function (event) {
     if (currentMode !== "click") return;
 
     event.stopPropagation();
@@ -1129,11 +1026,7 @@ customElements.define("sea-bonus-widget", SeaBonusWidget);
     } else {
       startVideo();
     }
-  }
-
-  sportsTv.addEventListener("mouseenter", handleMouseEnter);
-  sportsTv.addEventListener("mouseleave", handleMouseLeave);
-  sportsTv.addEventListener("click", handleClick);
+  });
 
   document.addEventListener("click", function (event) {
     if (currentMode === "click" && !wrapper.contains(event.target)) {
@@ -1149,18 +1042,23 @@ customElements.define("sea-bonus-widget", SeaBonusWidget);
     }, 150);
   });
 
-  function updateVisibility() {
-    const path = location.pathname.toLowerCase();
-    const isHome = path === "/en" || path === "/en/";
+function updateVisibility() {
+  const path = location.pathname.toLowerCase();
 
-    wrapper.style.display = isHome ? "block" : "none";
+  const isHome =
+    path === "/" ||
+    path === "/test.html" ||
+    path === "/en" ||
+    path === "/en/";
 
-    if (!isHome) {
-      stopVideo();
-    } else {
-      preloadVideo();
-    }
+  wrapper.style.display = isHome ? "block" : "none";
+
+  if (!isHome) {
+    stopVideo();
+  } else {
+    preloadVideo();
   }
+}
 
   applyMode();
   updateVisibility();
