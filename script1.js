@@ -383,3 +383,82 @@
 
   console.log("[SPORTS-TV] Ready");
 })();
+(() => {
+  const STYLE_ID = 'top-providers-marquee-style';
+  const SLIDER_SELECTOR = '[data-mj="widget-top-providers-slider"]';
+  const ITEM_SELECTOR = '[data-mj="widget-top-providers-item"]';
+
+  function addStyles() {
+    if (document.getElementById(STYLE_ID)) return;
+
+    const style = document.createElement('style');
+    style.id = STYLE_ID;
+    style.textContent = `
+      [data-mj="widget-top-providers"] button[aria-label="arrow_left"],
+      [data-mj="widget-top-providers"] button[aria-label="arrow_right"] {
+        display: none !important;
+      }
+
+      ${SLIDER_SELECTOR} {
+        overflow: hidden !important;
+        display: flex !important;
+        width: max-content !important;
+        animation: top-providers-marquee 22s linear infinite !important;
+        will-change: transform;
+      }
+
+      ${SLIDER_SELECTOR}:hover {
+        animation-play-state: paused !important;
+      }
+
+      ${ITEM_SELECTOR} {
+        flex: 0 0 auto !important;
+        min-width: 140.875px !important;
+        max-width: 103.875px !important;
+        transform: none !important;
+      }
+
+      @keyframes top-providers-marquee {
+        from {
+          transform: translateX(0);
+        }
+
+        to {
+          transform: translateX(-50%);
+        }
+      }
+    `;
+
+    document.head.appendChild(style);
+  }
+
+  function initMarquee() {
+    const slider = document.querySelector(SLIDER_SELECTOR);
+    if (!slider || slider.dataset.marqueeReady === 'true') return;
+
+    const items = Array.from(slider.querySelectorAll(ITEM_SELECTOR));
+    if (!items.length) return;
+
+    items.forEach((item) => {
+      const clone = item.cloneNode(true);
+      clone.setAttribute('data-marquee-clone', 'true');
+      slider.appendChild(clone);
+    });
+
+    slider.dataset.marqueeReady = 'true';
+    console.log('[Top Providers Marquee] initialized');
+  }
+
+  addStyles();
+  initMarquee();
+
+  const observer = new MutationObserver(() => {
+    addStyles();
+    initMarquee();
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+})();
