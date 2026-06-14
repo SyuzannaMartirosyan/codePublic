@@ -818,7 +818,7 @@ customElements.define("sea-bonus-widget", SeaBonusWidget);
   if (document.getElementById("sports-tv-widget")) return;
 
   const BREAKPOINT = 1000;
-  const FRONT_IMAGE_URL = "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/tv_11zon.jpg";
+  const FRONT_IMAGE_URL = "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/7dc49bead42b5eee84464149b12afee866477639/images/bl.png";
 
   let currentMode = null;
   let resizeTimer = null;
