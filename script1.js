@@ -1177,7 +1177,6 @@ function updateVisibility() {
   });
 })();
 
-
 (function () {
   const WIDGETS = [
     {
@@ -1189,7 +1188,7 @@ function updateVisibility() {
     },
     {
       tagName: "sea-bonus-widget",
-      targetSelector: '[ data-mj="widget-top-providers"]',
+      targetSelector: '[data-mj="widget-top-providers"]',
       instanceId: "custom-sea-bonus-widget",
       position: "before",
       attributes: {
@@ -1203,13 +1202,34 @@ function updateVisibility() {
 
   let scheduled = false;
 
+  function isHomePage() {
+    const path = location.pathname.toLowerCase();
+
+    return (
+      path === "/" ||
+      path === "/test.html" ||
+      path === "/en" ||
+      path === "/en/"
+    );
+  }
+
   function applyAttributes(element, attributes = {}) {
     Object.entries(attributes).forEach(([name, value]) => {
       element.setAttribute(name, value);
     });
   }
 
+  function removeWidget(config) {
+    const widget = document.getElementById(config.instanceId);
+    if (widget) widget.remove();
+  }
+
   function insertWidget(config) {
+    if (!isHomePage()) {
+      removeWidget(config);
+      return false;
+    }
+
     const {
       tagName,
       targetSelector,
@@ -1244,48 +1264,52 @@ function updateVisibility() {
     }
 
     console.log(`[WIDGET-INJECTOR] ${tagName} inserted / restored`);
-
     return true;
   }
 
-  function insertAllWidgets() {
+  function syncWidgets() {
+    if (!isHomePage()) {
+      WIDGETS.forEach(removeWidget);
+      return;
+    }
+
     WIDGETS.forEach(insertWidget);
   }
 
-  function scheduleInsert() {
+  function scheduleSync() {
     if (scheduled) return;
 
     scheduled = true;
 
     requestAnimationFrame(() => {
       scheduled = false;
-      insertAllWidgets();
+      syncWidgets();
     });
   }
 
-  insertAllWidgets();
+  syncWidgets();
 
-  const observer = new MutationObserver(scheduleInsert);
+  const observer = new MutationObserver(scheduleSync);
 
   observer.observe(document.body, {
     childList: true,
     subtree: true
   });
 
-  window.addEventListener("popstate", scheduleInsert);
-  window.addEventListener("hashchange", scheduleInsert);
+  window.addEventListener("popstate", scheduleSync);
+  window.addEventListener("hashchange", scheduleSync);
 
   const originalPushState = history.pushState;
   const originalReplaceState = history.replaceState;
 
   history.pushState = function () {
     originalPushState.apply(this, arguments);
-    scheduleInsert();
+    scheduleSync();
   };
 
   history.replaceState = function () {
     originalReplaceState.apply(this, arguments);
-    scheduleInsert();
+    scheduleSync();
   };
 })();
 
