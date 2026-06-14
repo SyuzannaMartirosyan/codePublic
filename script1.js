@@ -528,10 +528,7 @@ class SeaBonusWidget extends HTMLElement {
   }
 
   connectedCallback() {
-      if (window.innerWidth < 1024) {
-    this.style.display = "none";
-    return;
-  }
+
     this.render();
     this.cacheElements();
     this.bindEvents();
