@@ -1,115 +1,4 @@
 
-(function () {
-  const WIDGETS = [
-    {
-      tagName: "slot-collections",
-      targetSelector: '[data-mj="widget-collection-slider"]',
-      instanceId: "custom-slot-collections-widget",
-      position: "before",
-      attributes: {}
-    },
-    {
-      tagName: "sea-bonus-widget",
-      targetSelector: '[ data-mj="widget-top-providers"]',
-      instanceId: "custom-sea-bonus-widget",
-      position: "before",
-      attributes: {
-        "ship-src": "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/xxx.png",
-        "back-wave-src": "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/waveeeee-Photoroom%201.png",
-        "front-wave-src": "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/waveeeee-Photoroom%201.png",
-        "promo-link": "/en/promotions/welcome-bonus"
-      }
-    }
-  ];
-
-  let scheduled = false;
-
-  function applyAttributes(element, attributes = {}) {
-    Object.entries(attributes).forEach(([name, value]) => {
-      element.setAttribute(name, value);
-    });
-  }
-
-  function insertWidget(config) {
-    const {
-      tagName,
-      targetSelector,
-      instanceId,
-      position = "before",
-      attributes = {}
-    } = config;
-
-    const target = document.querySelector(targetSelector);
-    if (!target || !target.parentNode) return false;
-
-    let widget = document.getElementById(instanceId);
-
-    if (!widget) {
-      widget = document.createElement(tagName);
-      widget.id = instanceId;
-    }
-
-    applyAttributes(widget, attributes);
-
-    const isCorrectPosition =
-      position === "before"
-        ? widget.nextElementSibling === target
-        : widget.previousElementSibling === target;
-
-    if (isCorrectPosition) return true;
-
-    if (position === "after") {
-      target.parentNode.insertBefore(widget, target.nextSibling);
-    } else {
-      target.parentNode.insertBefore(widget, target);
-    }
-
-    console.log(`[WIDGET-INJECTOR] ${tagName} inserted / restored`);
-
-    return true;
-  }
-
-  function insertAllWidgets() {
-    WIDGETS.forEach(insertWidget);
-  }
-
-  function scheduleInsert() {
-    if (scheduled) return;
-
-    scheduled = true;
-
-    requestAnimationFrame(() => {
-      scheduled = false;
-      insertAllWidgets();
-    });
-  }
-
-  insertAllWidgets();
-
-  const observer = new MutationObserver(scheduleInsert);
-
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
-
-  window.addEventListener("popstate", scheduleInsert);
-  window.addEventListener("hashchange", scheduleInsert);
-
-  const originalPushState = history.pushState;
-  const originalReplaceState = history.replaceState;
-
-  history.pushState = function () {
-    originalPushState.apply(this, arguments);
-    scheduleInsert();
-  };
-
-  history.replaceState = function () {
-    originalReplaceState.apply(this, arguments);
-    scheduleInsert();
-  };
-})();
-
 
 
 class SlotCollections extends HTMLElement {
@@ -1390,3 +1279,116 @@ customElements.define("sea-bonus-widget", SeaBonusWidget);
     subtree: true
   });
 })();
+
+
+(function () {
+  const WIDGETS = [
+    {
+      tagName: "slot-collections",
+      targetSelector: '[data-mj="widget-collection-slider"]',
+      instanceId: "custom-slot-collections-widget",
+      position: "before",
+      attributes: {}
+    },
+    {
+      tagName: "sea-bonus-widget",
+      targetSelector: '[ data-mj="widget-top-providers"]',
+      instanceId: "custom-sea-bonus-widget",
+      position: "before",
+      attributes: {
+        "ship-src": "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/xxx.png",
+        "back-wave-src": "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/waveeeee-Photoroom%201.png",
+        "front-wave-src": "https://raw.githubusercontent.com/SyuzannaMartirosyan/codePublic/refs/heads/main/images/waveeeee-Photoroom%201.png",
+        "promo-link": "/en/promotions/welcome-bonus"
+      }
+    }
+  ];
+
+  let scheduled = false;
+
+  function applyAttributes(element, attributes = {}) {
+    Object.entries(attributes).forEach(([name, value]) => {
+      element.setAttribute(name, value);
+    });
+  }
+
+  function insertWidget(config) {
+    const {
+      tagName,
+      targetSelector,
+      instanceId,
+      position = "before",
+      attributes = {}
+    } = config;
+
+    const target = document.querySelector(targetSelector);
+    if (!target || !target.parentNode) return false;
+
+    let widget = document.getElementById(instanceId);
+
+    if (!widget) {
+      widget = document.createElement(tagName);
+      widget.id = instanceId;
+    }
+
+    applyAttributes(widget, attributes);
+
+    const isCorrectPosition =
+      position === "before"
+        ? widget.nextElementSibling === target
+        : widget.previousElementSibling === target;
+
+    if (isCorrectPosition) return true;
+
+    if (position === "after") {
+      target.parentNode.insertBefore(widget, target.nextSibling);
+    } else {
+      target.parentNode.insertBefore(widget, target);
+    }
+
+    console.log(`[WIDGET-INJECTOR] ${tagName} inserted / restored`);
+
+    return true;
+  }
+
+  function insertAllWidgets() {
+    WIDGETS.forEach(insertWidget);
+  }
+
+  function scheduleInsert() {
+    if (scheduled) return;
+
+    scheduled = true;
+
+    requestAnimationFrame(() => {
+      scheduled = false;
+      insertAllWidgets();
+    });
+  }
+
+  insertAllWidgets();
+
+  const observer = new MutationObserver(scheduleInsert);
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+  window.addEventListener("popstate", scheduleInsert);
+  window.addEventListener("hashchange", scheduleInsert);
+
+  const originalPushState = history.pushState;
+  const originalReplaceState = history.replaceState;
+
+  history.pushState = function () {
+    originalPushState.apply(this, arguments);
+    scheduleInsert();
+  };
+
+  history.replaceState = function () {
+    originalReplaceState.apply(this, arguments);
+    scheduleInsert();
+  };
+})();
+
