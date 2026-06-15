@@ -572,7 +572,7 @@ class SeaBonusWidget extends HTMLElement {
 
         .sea-widget {
           position: relative;
-          width: min(1200px, calc(100% - 32px));
+          width: min(1400px, calc(100% - 32px));
           height: 234px;
           margin: 60px auto;
           overflow: hidden;
