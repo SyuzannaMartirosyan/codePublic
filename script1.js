@@ -872,7 +872,7 @@ customElements.define("sea-bonus-widget", SeaBonusWidget);
   border-radius: 24px;
   backface-visibility: hidden;
   overflow: hidden;  
-  backdrop-filter: blur(16px);
+  
   -webkit-backdrop-filter: blur(16px);
   
 }
