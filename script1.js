@@ -1,6 +1,4 @@
 
-
-
 class SlotCollections extends HTMLElement {
   constructor() {
     super();
