@@ -871,9 +871,7 @@ customElements.define("sea-bonus-widget", SeaBonusWidget);
   inset: 0;
   border-radius: 24px;
   backface-visibility: hidden;
-  overflow: hidden;
-  background: rgba(7,17,31,.35);
-  
+  overflow: hidden;  
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   
